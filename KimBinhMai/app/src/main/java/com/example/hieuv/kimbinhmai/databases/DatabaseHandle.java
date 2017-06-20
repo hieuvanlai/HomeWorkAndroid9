@@ -55,5 +55,30 @@ public class DatabaseHandle {
 
 
     }
+    public List<StoryModel> getConten(int iD){
+        storyDatabase = mydatabase.getReadableDatabase();
+
+        List<StoryModel> storyModelList = new ArrayList<>();
+
+        Cursor cursor = storyDatabase.rawQuery("SELECT * FROM tbl_short_story where id=" +iD+
+                "", null);
+        cursor.moveToFirst();
+
+        while(!cursor.isAfterLast()){
+            int id = cursor.getInt(0);
+            String image = cursor.getString(1);
+            String title = cursor.getString(2);
+            String description = cursor.getString(3);
+            String content = cursor.getString(4);
+            String author = cursor.getString(5);
+            boolean bookmark = cursor.getInt(6) != 0;
+            StoryModel storyModel = new StoryModel(id,image,title,description,content,author,bookmark);
+            storyModelList.add(storyModel);
+            cursor.moveToNext();
+        }
+        return storyModelList;
+
+
+    }
 
 }

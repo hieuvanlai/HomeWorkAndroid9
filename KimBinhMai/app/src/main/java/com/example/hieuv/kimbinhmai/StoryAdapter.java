@@ -51,4 +51,22 @@ public class StoryAdapter extends ArrayAdapter<StoryModel> {
         tvStory.setImageBitmap(bitmap);
         return convertView;
     }
+    public View getViewConten(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        LayoutInflater layoutInflater=LayoutInflater.from(context);
+        convertView = layoutInflater.inflate(R.layout.item_list_story,null);
+        StoryModel storyModel = storyModelList.get(position);
+
+        TextView tvAuthor = (TextView) convertView.findViewById(R.id.iv_author);
+        TextView tvDecrip = (TextView) convertView.findViewById(R.id.ivDescriptionConten);
+        TextView tvBookMark = (TextView) convertView.findViewById(R.id.iv_bookmarkConten);
+        ImageView tvStory = (ImageView) convertView.findViewById(R.id.iv_avataConten);
+        tvDecrip.setText(storyModel.getDescription());
+        tvBookMark.setText(storyModel.getTitle());
+        tvAuthor.setText(storyModel.getAuthor());
+        String image[] = storyModel.getImage().split(",");
+        byte[] decodeByte = Base64.decode(image[1],Base64.DEFAULT);
+        Bitmap bitmap= BitmapFactory.decodeByteArray(decodeByte,0,decodeByte.length);
+        tvStory.setImageBitmap(bitmap);
+        return convertView;
+    }
 }
